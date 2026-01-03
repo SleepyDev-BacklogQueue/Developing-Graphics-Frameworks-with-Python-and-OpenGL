@@ -49,10 +49,10 @@ class Base(object):
                 self.running = False
 
             ## Update ##
-            self.update()
-
             self.deltaTime = self.clock.get_time() / 1000
             self.time += self.deltaTime
+
+            self.update()
 
             ## Render ##
             # Display image on screen
