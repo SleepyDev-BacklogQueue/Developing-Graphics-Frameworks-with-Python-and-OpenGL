@@ -27,6 +27,9 @@ class Base(object):
         # Application clock
         self.clock = pygame.time.Clock()
 
+        # Time since application start
+        self.time = 0
+
 
     def initialise(self):
         pass
@@ -47,6 +50,9 @@ class Base(object):
 
             ## Update ##
             self.update()
+
+            self.deltaTime = self.clock.get_time() / 1000
+            self.time += self.deltaTime
 
             ## Render ##
             # Display image on screen
