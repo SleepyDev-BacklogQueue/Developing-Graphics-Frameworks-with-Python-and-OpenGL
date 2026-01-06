@@ -1,6 +1,6 @@
 from geometry.geometry import Geometry
 
-class PolygonGeometry(Geometry):
+class ParametricGeometry(Geometry):
     def __init__(self, uStart, uEnd, uResolution, vStart, vEnd, vResolution, surfaceFunction):
         super().__init__()
 
@@ -43,10 +43,10 @@ class PolygonGeometry(Geometry):
                 positionData += [
                     quadPosition[0].copy(),
                     quadPosition[1].copy(),
-                    quadPosition[2].copy(),
-                    quadPosition[0].copy(),
-                    quadPosition[2].copy(),
                     quadPosition[3].copy(),
+                    quadPosition[0].copy(),
+                    quadPosition[3].copy(),
+                    quadPosition[2].copy()
                 ]
 
                 # Set colorData
@@ -60,6 +60,6 @@ class PolygonGeometry(Geometry):
                 ]
 
         # Add attributes
-        self.addAttribute("vertexPosition", "vec3", positionData)
-        self.addAttribute("vertexColor", "vec3", colorData)
+        self.addAttribute("vec3", "vertexPosition", positionData)
+        self.addAttribute("vec3", "vertexColor", colorData)
         self.countVertices()

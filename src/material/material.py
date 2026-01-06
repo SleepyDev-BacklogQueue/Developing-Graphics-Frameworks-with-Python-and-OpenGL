@@ -19,7 +19,7 @@ class Material(object):
     def addUniform(self, dataType, variableName, data):
         self.uniforms[variableName] = Uniform(dataType, data)
     
-    def locateUniform(self):
+    def locateUniforms(self):
         for variableName, uniformObject in self.uniforms.items():
             uniformObject.locateVariable(self.programRef, variableName)
         
