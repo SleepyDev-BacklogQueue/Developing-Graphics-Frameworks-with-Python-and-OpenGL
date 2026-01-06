@@ -41,7 +41,7 @@ class Object3D(object):
             self.transform = matrix @ self.transform
     
     def translate(self, x, y, z, localCoord=True):
-        matrix = Matrix.makeTranslate(x, y, z)
+        matrix = Matrix.makeTranslation(x, y, z)
         self.applyMatrix(matrix, localCoord)
             
     def rotateX(self, theta, localCoord=True):
