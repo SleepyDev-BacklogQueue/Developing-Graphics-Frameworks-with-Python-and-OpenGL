@@ -34,12 +34,13 @@ class ParametricGeometry(Geometry):
                 u = uIndex/uResolution
                 v = vIndex/vResolution
 
-                vArray += [u, v]
+                vArray += [[u, v]]
             uvs += [vArray]
 
         # Group attributes into quads
         positionData = []
         colorData = []
+        uvData = []
         for xIndex in range(uResolution):
             for yIndex in range(vResolution):
                 # Set positionData
@@ -77,7 +78,7 @@ class ParametricGeometry(Geometry):
                     uvs[xIndex+1][yIndex+1]
                 ]
                 uvData += [
-                    uvQuad[0]
+                    uvQuad[0],
                     uvQuad[1],
                     uvQuad[3],
                     uvQuad[0],
