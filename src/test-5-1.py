@@ -6,7 +6,7 @@ from core.camera import Camera
 from core.scene import Scene
 from core.mesh import Mesh
 from core.texture import Texture
-from geometry.boxGeometry import BoxGeometry
+from geometry.rectangleGeometry import RectangleGeometry
 from material.surfaceMaterial import SurfaceMaterial
 from material.textureMaterial import TextureMaterial
 
@@ -23,10 +23,9 @@ class Test(Base):
         # Define scene
         self.scene = Scene()
 
-        geometry = BoxGeometry()
-        material = SurfaceMaterial({
-            "useVertexColors": True
-        })
+        geometry = RectangleGeometry()
+        grid = Texture("../images/grid.png")
+        material = TextureMaterial(grid)
         self.mesh = Mesh(geometry, material)
         self.scene.add(self.mesh)
 

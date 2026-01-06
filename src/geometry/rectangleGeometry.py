@@ -30,7 +30,21 @@ class RectangleGeometry(Geometry):
             C[0], C[3], C[2]
         ]
 
+        # Set texture coordinates
+        T = [
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [1.0, 1.0]
+        ]
+
+        uvData = [
+            T[0], T[1], T[3],
+            T[0], T[3], T[2]
+        ]
+
         # Add attributes
-        self.addAttribute("vertexPosition", "vec3", positionData)
-        self.addAttribute("vertexColor", "vec3", colorData)
+        self.addAttribute("vec3", "vertexPosition", positionData)
+        self.addAttribute("vec3", "vertexColor", colorData)
+        self.addAttribute("vec2", "vertexUV", uvData)
         self.countVertices()

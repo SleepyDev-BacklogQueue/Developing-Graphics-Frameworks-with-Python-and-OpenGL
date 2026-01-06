@@ -7,6 +7,9 @@ class Renderer(object):
         glEnable(GL_MULTISAMPLE)
         glClearColor(clearColor[0], clearColor[1], clearColor[2], 1)
 
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
     def render(self, scene, camera):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
