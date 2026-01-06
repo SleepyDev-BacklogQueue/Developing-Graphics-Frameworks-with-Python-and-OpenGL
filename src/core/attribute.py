@@ -28,6 +28,9 @@ class Attribute(object):
         variableRef = glGetAttribLocation(programRef, variableName)
         if variableRef == -1: return
 
+        # Bind buffer
+        glBindBuffer(GL_ARRAY_BUFFER, self.bufferRef)
+
         # Associate variable
         if self.dataType == "int":
             glVertexAttribPointer(variableRef, 1, GL_INT, False, 0, None)
