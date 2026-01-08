@@ -1,15 +1,17 @@
 from geometry.geometry import Geometry
 
 class RectangleGeometry(Geometry):
-    def __init__(self, width=1, height=1):
+    def __init__(self, width=1, height=1, position=[0,0], alignment=[0.5, 0.5]):
         super().__init__()
 
         # Set position data
+        x, y = position
+        a, b = alignment
         P = [
-            [-width/2, -height/2,  0.0],
-            [ width/2, -height/2,  0.0],
-            [-width/2,  height/2,  0.0],
-            [ width/2,  height/2,  0.0]
+            [x + ( -a)*width, y + ( -b)*height,  0.0],
+            [x + (1-a)*width, y + ( -b)*height,  0.0],
+            [x + ( -a)*width, y + (1-b)*height,  0.0],
+            [x + (1-a)*width, y + (1-b)*height,  0.0]
         ]
 
         positionData = [

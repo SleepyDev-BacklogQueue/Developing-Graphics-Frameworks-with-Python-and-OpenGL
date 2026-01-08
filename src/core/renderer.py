@@ -10,8 +10,11 @@ class Renderer(object):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    def render(self, scene, camera):
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    def render(self, scene, camera, clearColor=True, clearDepth=True):
+        if clearColor:
+            glClear(GL_COLOR_BUFFER_BIT)
+        if clearDepth:
+            glClear(GL_DEPTH_BUFFER_BIT)
 
         camera.updateViewMatrix()
 
