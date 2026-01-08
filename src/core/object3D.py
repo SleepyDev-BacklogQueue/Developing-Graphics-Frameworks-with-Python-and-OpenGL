@@ -60,6 +60,9 @@ class Object3D(object):
         matrix = Matrix.makeScale(s)
         self.applyMatrix(matrix, localCoord)
 
+    def lookAt(self, targetPoaition):
+        self.transform = Matrix.makeLookAt(self.getWorldPosition(), targetPoaition)
+
     # Quick get/set position
     def getPosition(self):
         return [

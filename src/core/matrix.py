@@ -1,4 +1,6 @@
 import numpy as np
+from numpy import subtract, divide, cross
+from numpy.linalg import norm
 from math import sin, cos, tan, pi
 
 class Matrix(object):
@@ -75,3 +77,27 @@ class Matrix(object):
             [  0, 0,  b, c],
             [  0, 0, -1, 1]
         ]).astype(float)
+
+    @staticmethod
+    def makeLookAt(position, target):
+        worldUp = [0,1,0]
+        forward = subtract(target, position)
+        right = cross(forward, worldUp)
+
+        if norm(right) < 0.001:
+            offset = np.array([0.001,0,0])
+            right = cross(foward, worldUp + offset)
+        
+        up = cross(right, forward)
+
+        # Normalise vectors
+        forward = divide(forward, norm(forward))
+        right = divide(right, norm(right))
+        up = divide(up, norm(up))
+
+        return np.array([
+            [right[0], up[0], -forward[0], position[0]],
+            [right[1], up[1], -forward[1], position[1]],
+            [right[2], up[2], -forward[2], position[2]],
+            [       0,     0,           0,           1]
+        ])
