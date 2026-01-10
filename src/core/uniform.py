@@ -3,7 +3,7 @@ from OpenGL.GL import *
 class Uniform(object):
     def __init__(self, dataType, data):
         # dataType is expected to have values
-        #   int | bool | float | vec2 | vec3 | vec4 | mat4 | sampler2D | Light
+        #   int | bool | float | vec2 | vec3 | vec4 | mat4 | sampler2D | Light | Shadow
         self.dataType = dataType
         self.data = data
 
@@ -18,6 +18,14 @@ class Uniform(object):
             self.variableRef["direction"]   = glGetUniformLocation(programRef, variableName + ".direction")
             self.variableRef["position"]    = glGetUniformLocation(programRef, variableName + ".position")
             self.variableRef["attenuation"] = glGetUniformLocation(programRef, variableName + ".attenuation")
+        elif self.dataType == "Shadow":
+            self.variableRef = {}
+            self.variableRef["lightDirection"]   = glGetUniformLocation(programRef, variableName + ".lightDirection")
+            self.variableRef["projectionMatrix"] = glGetUniformLocation(programRef, variableName + ".projectionMatrix")
+            self.variableRef["viewMatrix"]       = glGetUniformLocation(programRef, variableName + ".viewMatrix")
+            self.variableRef["depthTexture"]     = glGetUniformLocation(programRef, variableName + ".depthTexture")
+            self.variableRef["strength"]         = glGetUniformLocation(programRef, variableName + ".strength")
+            self.variableRef["bias"]             = glGetUniformLocation(programRef, variableName + ".bias")
         else:
             self.variableRef = glGetUniformLocation(programRef, variableName)
     
@@ -53,5 +61,17 @@ class Uniform(object):
             position = self.data.getPosition()
             glUniform3f(self.variableRef["position"], position[0], position[1], position[2])
             glUniform3f(self.variableRef["attenuation"], self.data.attenuation[0], self.data.attenuation[1], self.data.attenuation[2])
+        elif self.dataType == "Shadow":
+            direction = self.data.lightSource.getDirection()
+            glUniform3f(self.variableRef["lightDirection"], direction[0], direction[1], direction[2])
+            glUniformMatrix4fv(self.variableRef["projectionMatrix"], 1, GL_TRUE, self.data.camera.projectionMatrix)
+            glUniformMatrix4fv(self.variableRef["viewMatrix"], 1, GL_TRUE, self.data.camera.viewMatrix)
+            textureObjectRef = self.data.renderTarget.texture.textureRef
+            textureUnitRef = 15
+            glActiveTexture(GL_TEXTURE0 + textureUnitRef)
+            glBindTexture(GL_TEXTURE_2D, textureObjectRef)
+            glUniform1i(self.variableRef["depthTexture"], textureUnitRef)
+            glUniform1f(self.variableRef["strength"], self.data.strength)
+            glUniform1f(self.variableRef["bias"], self.data.bias)
         else:
             raise Exception(f"Uniform has unknown type {self.dataType}")
