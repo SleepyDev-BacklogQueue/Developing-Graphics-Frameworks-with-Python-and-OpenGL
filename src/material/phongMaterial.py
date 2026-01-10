@@ -2,7 +2,7 @@ from material.material import Material
 from OpenGL.GL import *
 
 class PhongMaterial(Material):
-    def __init__(self, texture=None, properties={}):
+    def __init__(self, texture=None, bumpTexture=None, properties={}):
         vertexShaderCode = """
         uniform mat4 modelMatrix;
         uniform mat4 viewMatrix;
@@ -76,6 +76,9 @@ class PhongMaterial(Material):
         uniform vec3 baseColor;
         uniform bool useTexture;
         uniform sampler2D texture;
+        uniform bool useBumpTexture;
+        uniform sampler2D bumpTexture;
+        uniform float bumpStrength;
         in vec3 position;
         in vec2 UV;
         in vec3 normal;
@@ -85,11 +88,15 @@ class PhongMaterial(Material):
             if (useTexture) {
                 color *= texture2D(texture, UV);
             }
+            vec3 bNormal = normal;
+            if (useBumpTexture) {
+                bNormal += bumpStrength * vec3(texture2D(bumpTexture, UV));
+            }
             vec3 total = vec3(0,0,0);
-            total += lightCalc(light0, position, normal);
-            total += lightCalc(light1, position, normal);
-            total += lightCalc(light2, position, normal);
-            total += lightCalc(light3, position, normal);
+            total += lightCalc(light0, position, bNormal);
+            total += lightCalc(light1, position, bNormal);
+            total += lightCalc(light2, position, bNormal);
+            total += lightCalc(light3, position, bNormal);
             color *= vec4(total, 1);
             fragColor = color;
         }
@@ -108,6 +115,10 @@ class PhongMaterial(Material):
         self.addUniform("bool", "useTexture", texture != None)
         if texture != None:
             self.addUniform("sampler2D", "texture", [texture.textureRef, 1])
+        self.addUniform("bool", "useBumpTexture", bumpTexture != None)
+        if bumpTexture != None:
+            self.addUniform("sampler2D", "bumpTexture", [bumpTexture.textureRef, 2])
+            self.addUniform("float", "bumpStrength", 1.0)
         self.locateUniforms()
 
         # Render settings
