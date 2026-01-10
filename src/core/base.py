@@ -18,18 +18,11 @@ class Base(object):
         self.screen = pygame.display.set_mode(screenSize, displayFlags)
         pygame.display.set_caption("Graphics Window")
 
-        # Application mainloop
+        # Application attributes
         self.running = True
-
-        # Application input
         self.input = Input()
-
-        # Application clock
         self.clock = pygame.time.Clock()
-
-        # Time since application start
         self.time = 0
-
 
     def initialise(self):
         pass

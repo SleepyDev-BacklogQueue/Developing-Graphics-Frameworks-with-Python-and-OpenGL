@@ -30,6 +30,7 @@ class Input(object):
                 self.keyUp_l += [keyName]
                 self.keyPressed_l.remove(keyName)
     
+    # Check key states
     def isKeyDown(self, keyCode):
         return keyCode in self.keyDown_l
     def isKeyUp(self, keyCode):
