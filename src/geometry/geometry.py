@@ -1,4 +1,5 @@
 from core.attribute import Attribute
+import numpy as np
 
 class Geometry(object):
     def __init__(self):
@@ -29,7 +30,7 @@ class Geometry(object):
         self.attributes[variableName].data = newPositionData
 
         # Apply matrix on vertex normals
-        rotationMatrix = mp.array([
+        rotationMatrix = np.array([
             matrix[0][0:3],
             matrix[1][0:3],
             matrix[2][0:3]
@@ -41,7 +42,7 @@ class Geometry(object):
             newNormal = rotationMatrix @ newNormal
             newVertexNormalData += [newNormal]
 
-        self.attribute["vertexNormal"].data = newVertexNormalData
+        self.attributes["vertexNormal"].data = newVertexNormalData
 
         oldFaceNormalData = self.attributes["faceNormal"].data
         newFaceNormalData = []
@@ -50,7 +51,7 @@ class Geometry(object):
             newNormal = rotationMatrix @ newNormal
             newFaceNormalData += [newNormal]
 
-        self.attribute["faceNormal"].data = newFaceNormalData
+        self.attributes["faceNormal"].data = newFaceNormalData
 
 
         self.attributes[variableName].uploadData()
