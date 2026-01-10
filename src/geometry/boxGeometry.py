@@ -61,8 +61,26 @@ class BoxGeometry(Geometry):
             T[0], T[3], T[2]
         ]
 
+        # Set normal vectors
+        N = [
+            [ 1, 0, 0],
+            [-1, 0, 0],
+            [ 0, 1, 0],
+            [ 0,-1, 0],
+            [ 0, 0, 1],
+            [ 0, 0,-1]
+        ]
+        normalData  = [N[0]]*6
+        normalData += [N[1]]*6
+        normalData += [N[2]]*6
+        normalData += [N[3]]*6
+        normalData += [N[4]]*6
+        normalData += [N[5]]*6
+
         # Add attributes
         self.addAttribute("vec3", "vertexPosition", positionData)
         self.addAttribute("vec3", "vertexColor", colorData)
         self.addAttribute("vec2", "vertexUV", uvData)
+        self.addAttribute("vec3", "vertexNormal", normalData)
+        self.addAttribute("vec3", "faceNormal", normalData)
         self.countVertices()

@@ -1,4 +1,5 @@
 from core.matrix import Matrix
+import numpy as np
 
 class Object3D(object):
     def __init__(self):
@@ -83,3 +84,23 @@ class Object3D(object):
             worldMatrix[1, 3],
             worldMatrix[2, 3]
         ]
+    
+    def getRotationMatrix(self):
+        return np.array([
+            self.transform[0][0:3],
+            self.transform[1][0:3],
+            self.transform[2][0:3]
+        ])
+
+    def getDirection(self):
+        forward = np.array([0,0,-1])
+        return list(self.getRotationMatrix() @ forward)
+
+    def setDirection(self, direction):
+        position = self.getPosition()
+        targetPosition = [
+            position[0] + direction[0],
+            position[1] + direction[1],
+            position[2] + direction[2]
+        ]
+        self.lookAt(targetPosition)
