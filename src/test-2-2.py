@@ -8,30 +8,31 @@ class Test(Base):
     def initialise(self):
         print("Initialising program...")
 
-        ## Build program ##
+        # Build program
         vertexShaderCode = """
         void main() {
-            gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+            gl_Position = vec4(0.0f, 0.0f, 0.0f, 1.0f);
         }
         """
 
         fragmentShaderCode = """
         out vec4 fragColor;
         void main() {
-            fragColor = vec4(1.0, 1.0, 0.0, 1.0);
+            fragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
         }
         """
 
         self.programRef = OpenGLUtils.initialiseProgram(vertexShaderCode, fragmentShaderCode)
 
-        ## Setup VAO ##
+        # Setup VAO
         vaoRef = glGenVertexArrays(1)
         glBindVertexArray(vaoRef)
 
-        ## Render settings (optional) ##
+        # Set render settings
         glPointSize(10)
     
     def update(self):
+        # Render
         glUseProgram(self.programRef)
         glDrawArrays(GL_POINTS, 0, 1)
 

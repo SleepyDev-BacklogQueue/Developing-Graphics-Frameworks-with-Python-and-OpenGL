@@ -9,24 +9,24 @@ class Test(Base):
     def initialise(self):
         print("Initialising program...")
 
-        ## Build program ##
+        # Build program
         vertexShaderCode = """
         in vec3 position;
         void main() {
-            gl_Position = vec4(position, 1.0);
+            gl_Position = vec4(position, 1.0f);
         }
         """
 
         fragmentShaderCode = """
         out vec4 fragColor;
         void main() {
-            fragColor = vec4(1.0, 1.0, 0.0, 1.0);
+            fragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
         }
         """
 
         self.programRef = OpenGLUtils.initialiseProgram(vertexShaderCode, fragmentShaderCode)
 
-        ## Setup triangle ##
+        # Setup triangle
         self.vaoTri = glGenVertexArrays(1)
         glBindVertexArray(self.vaoTri)
 
@@ -39,7 +39,7 @@ class Test(Base):
         positionAttributeTri = Attribute("vec3", positionDataTri)
         positionAttributeTri.associateVariable(self.programRef, "position")
 
-        ## Setup square ##
+        # Setup square
         self.vaoSquare = glGenVertexArrays(1)
         glBindVertexArray(self.vaoSquare)
 
@@ -53,8 +53,7 @@ class Test(Base):
         positionAttributeSquare = Attribute("vec3", positionDataSquare)
         positionAttributeSquare.associateVariable(self.programRef, "position")
 
-
-        ## Render settings (optional) ##
+        # Set render settings
         glLineWidth(4)
     
     def update(self):

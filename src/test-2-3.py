@@ -9,28 +9,28 @@ class Test(Base):
     def initialise(self):
         print("Initialising program...")
 
-        ## Build program ##
+        # Build program
         vertexShaderCode = """
         in vec3 position;
         void main() {
-            gl_Position = vec4(position, 1.0);
+            gl_Position = vec4(position, 1.0f);
         }
         """
 
         fragmentShaderCode = """
         out vec4 fragColor;
         void main() {
-            fragColor = vec4(1.0, 1.0, 0.0, 1.0);
+            fragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
         }
         """
 
         self.programRef = OpenGLUtils.initialiseProgram(vertexShaderCode, fragmentShaderCode)
 
-        ## Setup VAO ##
+        # Setup VAO
         vaoRef = glGenVertexArrays(1)
         glBindVertexArray(vaoRef)
 
-        ## Setup attributes ##
+        # Setup vertex attributes
         positionData = [
             [ 0.8,  0.0,  0.0],
             [ 0.4,  0.6,  0.0],
@@ -43,13 +43,18 @@ class Test(Base):
         positionAttribute = Attribute("vec3", positionData)
         positionAttribute.associateVariable(self.programRef, "position")
 
-
-        ## Render settings (optional) ##
+        # Set render settings
         glLineWidth(4)
+
+        # Set drawStyle :
+        #   GL_LINE_LOOP | GL_LINE_STRIP | GL_LINES | ...
+        #   GL_TRIANGLES | GL_TRIANGLE_FAN
+        self.drawStyle = GL_LINE_LOOP
     
     def update(self):
+        # Render
         glUseProgram(self.programRef)
-        glDrawArrays(GL_LINE_LOOP, 0, self.vertexCount)
+        glDrawArrays(self.drawStyle, 0, self.vertexCount)
 
 # Launch application
 Test().run()

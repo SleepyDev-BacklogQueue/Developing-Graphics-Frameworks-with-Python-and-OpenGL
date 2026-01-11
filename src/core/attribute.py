@@ -3,7 +3,7 @@ import numpy as np
 
 class Attribute(object):
     def __init__(self, dataType, data):
-        # dataType is expected to have values
+        # dataType is expected to have values:
         #   int | float | vec2 | vec3 | vec4
         self.dataType = dataType
         self.data = data

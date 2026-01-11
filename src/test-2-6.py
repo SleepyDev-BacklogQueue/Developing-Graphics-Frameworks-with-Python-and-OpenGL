@@ -10,13 +10,13 @@ class Test(Base):
     def initialise(self):
         print("Initialising program...")
 
-        ## Build program ##
+        # Build program
         vertexShaderCode = """
         in vec3 position;
         uniform vec3 translation;
         void main() {
             vec3 pos = position + translation;
-            gl_Position = vec4(pos, 1.0);
+            gl_Position = vec4(pos, 1.0f);
         }
         """
 
@@ -24,17 +24,17 @@ class Test(Base):
         uniform vec3 baseColor;
         out vec4 fragColor;
         void main() {
-            fragColor = vec4(baseColor, 1.0);
+            fragColor = vec4(baseColor, 1.0f);
         }
         """
 
         self.programRef = OpenGLUtils.initialiseProgram(vertexShaderCode, fragmentShaderCode)
 
-        ## Setup VAO ##
+        # Setup VAO
         vaoRef = glGenVertexArrays(1)
         glBindVertexArray(vaoRef)
 
-        ## Setup attributes ##
+        # Setup vertex attributes
         positionData = [
             [ 0.0,  0.2,  0.0],
             [ 0.2, -0.2,  0.0],
@@ -44,17 +44,15 @@ class Test(Base):
         positionAttribute = Attribute("vec3", positionData)
         positionAttribute.associateVariable(self.programRef, "position")
 
-        ## Setup uniforms ##
+        # Setup uniforms
         self.translation1 = Uniform("vec3", [-0.5, 0.0, 0.0])
-        self.translation1.locateVariable(self.programRef, "translation")
-
-        self.translation2 = Uniform("vec3", [0.5, 0.0, 0.0])
-        self.translation2.locateVariable(self.programRef, "translation")
-
         self.baseColor1 = Uniform("vec3", [1.0, 0.0, 0.0])
+        self.translation1.locateVariable(self.programRef, "translation")
         self.baseColor1.locateVariable(self.programRef, "baseColor")
 
+        self.translation2 = Uniform("vec3", [ 0.5, 0.0, 0.0])
         self.baseColor2 = Uniform("vec3", [0.0, 0.0, 1.0])
+        self.translation2.locateVariable(self.programRef, "translation")
         self.baseColor2.locateVariable(self.programRef, "baseColor")
 
     def update(self):

@@ -3,6 +3,7 @@ from OpenGL.GL import *
 class OpenGLUtils(object):
     @staticmethod
     def printSystemInfo():
+        # Get system information
         print(f"  Vendor: {glGetString(GL_VENDOR).decode("utf-8")}")
         print(f"Renderer: {glGetString(GL_RENDERER).decode("utf-8")}")
         print(f"OpenGL version supported: {glGetString(GL_VERSION).decode("utf-8")}")

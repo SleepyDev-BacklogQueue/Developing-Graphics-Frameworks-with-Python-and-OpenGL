@@ -5,7 +5,7 @@ import sys
 
 class Base(object):
     def __init__(self, screenSize=[512, 512]):
-        # Initialise all pygame modules
+        # Initialise pygame
         pygame.init()
 
         # Specify OpenGL context
@@ -20,9 +20,9 @@ class Base(object):
 
         # Application attributes
         self.running = True
-        self.input = Input()
         self.clock = pygame.time.Clock()
         self.time = 0
+        self.input = Input()
 
     def initialise(self):
         pass
@@ -31,24 +31,22 @@ class Base(object):
         pass
 
     def run(self):
-        ## Startup ##
+        # Startup
         self.initialise()
 
-        ## Mainloop ##
+        # Mainloop
         while self.running:
-            ## Process input ##
+            # Process input
             self.input.update()
             if self.input.quit:
                 self.running = False
 
-            ## Update ##
+            # Update
             self.deltaTime = self.clock.get_time() / 1000
             self.time += self.deltaTime
-
             self.update()
 
-            ## Render ##
-            # Display image on screen
+            # Render
             pygame.display.flip()
 
             # Pause for fixed FPS
